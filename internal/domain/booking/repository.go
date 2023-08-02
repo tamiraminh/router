@@ -110,7 +110,7 @@ func (r *BookingRepositoryMySQL) ResolveByID(id uuid.UUID) (booking Booking, err
 		bookingQueries.selectBooking+" and id = ?",
 		id.String())
 	if err != nil && err == sql.ErrNoRows {
-		err = failure.NotFound("foo")
+		err = failure.NotFound("booking")
 		logger.ErrorWithStack(err)
 		return
 	}
