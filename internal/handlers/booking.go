@@ -10,6 +10,7 @@ import (
 	"github.com/evermos/boilerplate-go/transport/http/middleware"
 	"github.com/evermos/boilerplate-go/transport/http/response"
 	"github.com/go-chi/chi"
+	middlewareChi "github.com/go-chi/chi/middleware"
 	"github.com/gofrs/uuid"
 )
 
@@ -59,7 +60,7 @@ func (h *BookingHandler) CreateBooking(w http.ResponseWriter, r *http.Request) {
 		response.WithError(w, err)
 		return
 	}
-	w.Header().Set("RequestId", booking.Id.String())
+	w.Header().Set("RequestId", middlewareChi.GetReqID(r.Context()))
 	response.WithJSON(w, http.StatusCreated, booking)
 }
 
@@ -78,7 +79,7 @@ func (h *BookingHandler) ResolveBookingByID(w http.ResponseWriter, r *http.Reque
 		response.WithError(w, err)
 		return
 	}
-	w.Header().Set("RequestId", booking.Id.String())
+	w.Header().Set("RequestId", middlewareChi.GetReqID(r.Context()))
 	response.WithJSON(w, http.StatusOK, booking)
 }
 
@@ -97,7 +98,7 @@ func (h *BookingHandler) ResolveBookingByParams(w http.ResponseWriter, r *http.R
 		response.WithError(w, err)
 		return
 	}
-	w.Header().Set("RequestId", booking.Id.String())
+	w.Header().Set("RequestId", middlewareChi.GetReqID(r.Context()))
 	response.WithJSON(w, http.StatusOK, booking)
 }
 
@@ -118,7 +119,7 @@ func (h *BookingHandler) SoftDeleteBooking(w http.ResponseWriter, r *http.Reques
 		response.WithError(w, err)
 		return
 	}
-	w.Header().Set("RequestId", idString)
+	w.Header().Set("RequestId", middlewareChi.GetReqID(r.Context()))
 	response.WithJSON(w, http.StatusOK, foo)
 }
 
@@ -145,7 +146,7 @@ func (h *BookingHandler) UpdateBooking(w http.ResponseWriter, r *http.Request) {
 		response.WithError(w, err)
 		return
 	}
-	w.Header().Set("RequestId", idString)
+	w.Header().Set("RequestId", middlewareChi.GetReqID(r.Context()))
 	response.WithJSON(w, http.StatusOK, foo)
 }
 
